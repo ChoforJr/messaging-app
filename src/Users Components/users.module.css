@@ -1,0 +1,9 @@
+.users {
+  color: #e6e6fa;
+}
+
+.users,
+.userInfo {
+  text-align: left;
+  margin-left: 10rem;
+}

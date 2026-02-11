@@ -1,0 +1,28 @@
+.createPost {
+  display: flex;
+  justify-content: center;
+}
+.createPostArticle {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5rem;
+  gap: 1rem;
+  font-size: 1.5rem;
+  text-align: left;
+}
+label {
+  color: #e6e6fa;
+}
+.createPostArticle textarea {
+  min-width: 30rem;
+  min-height: 10rem;
+}
+button {
+  width: 8rem;
+  font-size: 1.5rem;
+  align-self: center;
+  color: #e6e6fa;
+  background-color: #008b8b;
+  border-color: #8fbc8b;
+  border-radius: 1rem;
+}
