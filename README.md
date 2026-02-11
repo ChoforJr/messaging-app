@@ -1,13 +1,9 @@
-# ADMIN CLIENT FOR BLOG API
+# MESSAGING APP
 
-This the Admin frontend client of Blog API, It is build using React JS
+This messaging app will allow users to communicate with each other using the messaging app api
 
-## BLOG API GITHUB REPO
+# MESSAGING APP API
 
-https://github.com/ChoforJr/blog-api
-
-## USER CLIENT GITHUB REPO
-
-https://github.com/ChoforJr/user-client-blog-api
+https://github.com/ChoforJr/messaging-app-api
 
 # Author : FORSAKANG CHOFOR JUNIOR
