@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-const apiUrl = import.meta.env.VITE_BLOG_API_URL;
+const apiUrl = import.meta.env.MESSAGING_APP_API_URL;
 
 export function useAppLogic() {
   const { id } = useParams();
@@ -335,7 +335,7 @@ export function useAppLogic() {
       if (response.ok) {
         setComments((prevComments) => {
           const updatedComments = prevComments.filter(
-            (comment) => comment.id != id
+            (comment) => comment.id != id,
           );
           return updatedComments;
         });

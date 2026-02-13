@@ -2,7 +2,7 @@ import styles from "./account.module.css";
 import { useState } from "react";
 import { ItemContext } from "../ItemContext";
 import { useContext } from "react";
-const apiUrl = import.meta.env.VITE_BLOG_API_URL;
+const apiUrl = import.meta.env.MESSAGING_APP_API_URL;
 
 const Account = () => {
   const { auth, account, changeAccountInfo } = useContext(ItemContext);

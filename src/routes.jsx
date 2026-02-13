@@ -1,12 +1,7 @@
 import App from "./App Components/App";
 import HomePage from "./HomePage Components/HomePage";
-import Posts from "./Posts Components/Posts";
-import Post from "./Post Components/Post";
-import CreatePost from "./Create Post Components/CreatePost";
-import EditPost from "./Edit Post Components/EditPost";
-import SignIn from "./SignIn Components/SignIn";
-import Account from "./Account Components/Account";
-import Users from "./Users Components/Users";
+import { PeopleChats, GroupChats } from "./Chats Components/Chats";
+import { ExplorePeople, ExploreGroups } from "./Explore Components/Explore";
 import ErrorPage from "./ErrorPage";
 
 const routes = [
@@ -20,13 +15,11 @@ const routes = [
         index: true,
         element: <HomePage />,
       },
-      { path: "posts", element: <Posts /> },
-      { path: "posts/:id", element: <Post /> },
-      { path: "createPost", element: <CreatePost /> },
-      { path: "editPost/:id", element: <EditPost /> },
-      { path: "signIn", element: <SignIn /> },
+      { path: "chats/people", element: <PeopleChats /> },
+      { path: "chats/groups", element: <GroupChats /> },
+      { path: "explore/people", element: <ExplorePeople /> },
+      { path: "explore/groups", element: <ExploreGroups /> },
       { path: "account", element: <Account /> },
-      { path: "users", element: <Users /> },
     ],
   },
 ];
