@@ -6,11 +6,14 @@ import { ItemContext } from "../ItemContext";
 import { useAppLogic } from "./UseAppLogic";
 
 const App = () => {
-  const { auth, setAuth } = useAppLogic();
+  const { auth, setAuth, account, refreshAccount, logout } = useAppLogic();
 
   const value = {
     auth,
     setAuth,
+    account,
+    refreshAccount,
+    logout,
   };
   return (
     <div className="container">

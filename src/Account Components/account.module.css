@@ -1,22 +1,178 @@
-.account {
+.accountContainer {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
   color: #e6e6fa;
 }
 
-.account,
-.accountInfo {
-  text-align: left;
-  margin-left: 10rem;
-  font-size: 1.4rem;
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
 }
 
-.accountInfo fieldset {
-  width: 40rem;
+.profileImg {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ee204d;
 }
 
-.accountInfo button:hover {
-  background-color: aqua;
+.photoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.accountInfo input {
-  margin-right: 1.5rem;
+.uploadBtn {
+  font-size: 0.8rem;
+  background: #ee204d;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.settingsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fullWidth {
+  grid-column: span 2;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background: #1a1a1a;
+  color: white;
+}
+
+.passwordFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.passwordFields input {
+  padding: 10px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 5px;
+  color: white;
+}
+
+button {
+  background: #ee204d;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #ff4d6d;
+}
+
+.loginMsg {
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.actionButtons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.logoutBtn {
+  background: transparent;
+  border: 2px solid #e6e6fa;
+  color: #e6e6fa;
+  padding: 10px 40px;
+  font-size: 1rem;
+}
+
+.logoutBtn:hover {
+  background: #e6e6fa;
+  color: #1a1a1a;
+}
+
+.dangerZone {
+  margin-top: 4rem;
+  padding: 2rem;
+  border: 1px dashed #ff4d4d;
+  border-radius: 12px;
+  background: rgba(255, 77, 77, 0.05);
+  text-align: center;
+}
+
+.dangerZone h3 {
+  color: #ff4d4d;
+  margin-bottom: 0.5rem;
+}
+
+.dangerZone p {
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.deleteBtn {
+  background: #ff4d4d;
+  padding: 10px 25px;
+}
+
+.deleteBtn:hover {
+  background: #b30000;
+}
+
+.guestNotice {
+  background: rgba(238, 32, 77, 0.15);
+  color: #130508;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ee204d;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Gray out inputs and buttons when disabled */
+input:disabled,
+textarea:disabled,
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.disabledArea {
+  position: relative;
 }

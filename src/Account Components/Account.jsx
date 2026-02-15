@@ -1,287 +1,300 @@
 import styles from "./account.module.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { ItemContext } from "../ItemContext";
-import { useContext } from "react";
-const apiUrl = import.meta.env.MESSAGING_APP_API_URL;
+
+const apiUrl = import.meta.env.VITE_MESSAGING_APP_API_URL;
 
 const Account = () => {
-  const { auth, account, changeAccountInfo } = useContext(ItemContext);
+  const { auth, account, refreshAccount, logout } = useContext(ItemContext);
+
+  const GUEST_ACCOUNTS = ["vegeta@gmail.com", "goku@gmail.com"];
+  const isGuest = account ? GUEST_ACCOUNTS.includes(account.username) : false;
+
   const [newDisplayName, setNewDisplayName] = useState("");
   const [newBio, setNewBio] = useState("");
   const [newUsername, setNewUsername] = useState("");
-  const [changePassword, setChangePassword] = useState({
+  const [passwords, setPasswords] = useState({
     currentPassword: "",
     newPassword: "",
     confirmNewPassword: "",
   });
 
-  function onChangeDisplayName(event) {
-    const { value } = event.target;
-    setNewDisplayName(value);
-  }
+  const authToken = localStorage.getItem("authorization");
 
-  function onChangeNewUsername(event) {
-    const { value } = event.target;
-    setNewUsername(value);
-  }
-
-  function onChangeNewBio(event) {
-    const { value } = event.target;
-    setNewBio(value);
-  }
-
-  function onChangeChangePassword(event) {
-    const { name, value } = event.target;
-    setChangePassword((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  }
-
-  async function submitNewDisplayName(event) {
-    event.preventDefault();
-
-    if (newDisplayName == "") {
-      return alert("You can't submit an empty field");
-    }
-
+  const handlePatch = async (endpoint, body, successMsg) => {
+    if (isGuest) return alert("Guest accounts cannot be modified.");
     try {
-      const authToken = localStorage.getItem("authorization");
-
-      const response = await fetch(`${apiUrl}/user/displayName`, {
-        method: "PUT",
+      const response = await fetch(`${apiUrl}/user/self/${endpoint}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          authorization: `${authToken}`,
+          authorization: authToken,
         },
-        body: JSON.stringify({
-          newDisplayName: newDisplayName,
-        }),
+        body: JSON.stringify(body),
       });
 
       if (response.ok) {
-        changeAccountInfo("displayName", newDisplayName);
+        alert(successMsg);
+        refreshAccount();
         setNewDisplayName("");
-      } else {
-        const result = await response.json();
-        console.error(result);
-        alert("Error, see console logs");
-      }
-    } catch (error) {
-      console.error("Network error:", error);
-      alert("Error, see console logs");
-    }
-  }
-
-  async function submitNewBio(event) {
-    event.preventDefault();
-
-    if (newBio == "") {
-      return alert("You can't submit an empty field");
-    }
-
-    try {
-      const authToken = localStorage.getItem("authorization");
-
-      const response = await fetch(`${apiUrl}/user/bio`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `${authToken}`,
-        },
-        body: JSON.stringify({
-          newBio: newBio,
-        }),
-      });
-
-      if (response.ok) {
-        changeAccountInfo("bio", newBio);
         setNewBio("");
-      } else {
-        const result = await response.json();
-        console.error(result);
-        alert("Error, see console logs");
-      }
-    } catch (error) {
-      console.error("Network error:", error);
-      alert("Error, see console logs");
-    }
-  }
-
-  async function submitNewUsername(event) {
-    event.preventDefault();
-
-    if (newUsername == "") {
-      return alert("You can't submit an empty field");
-    }
-
-    try {
-      const authToken = localStorage.getItem("authorization");
-
-      const response = await fetch(`${apiUrl}/user/username`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `${authToken}`,
-        },
-        body: JSON.stringify({
-          newUsername: newUsername,
-        }),
-      });
-
-      if (response.ok) {
-        changeAccountInfo("username", newUsername);
         setNewUsername("");
+        return true;
       } else {
         const result = await response.json();
-        console.error(result);
-        alert("Error, see console logs");
+        alert(result.errors?.[0]?.msg || result.error || "Update failed");
       }
-    } catch (error) {
-      console.error("Network error:", error);
-      alert("Error, see console logs");
+    } catch (err) {
+      console.error(err);
+    }
+    return false;
+  };
+
+  async function deletePhoto() {
+    if (isGuest) return;
+    try {
+      const response = await fetch(
+        `${apiUrl}/user/file/profile/photo/${account.photoId}`,
+        {
+          method: "DELETE",
+          headers: { authorization: authToken },
+        },
+      );
+
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const err = await response.json();
+          alert(err.error || "Delete failed");
+        } else {
+          alert("Delete failed: Server error");
+        }
+      }
+    } catch (err) {
+      console.error("Delete Error:", err);
     }
   }
 
-  async function submitNewPassword(event) {
-    event.preventDefault();
+  const handlePhotoUpload = async (e) => {
+    if (isGuest) return alert("Guest accounts cannot change photos.");
+    const file = e.target.files[0];
+    if (!file) return;
 
-    if (
-      changePassword.currentPassword == "" ||
-      changePassword.newPassword == "" ||
-      changePassword.confirmNewPassword == ""
-    ) {
-      return alert("You can't submit an empty field");
-    }
+    const formData = new FormData();
+    formData.append("uploads", file);
+
+    await deletePhoto();
 
     try {
-      const authToken = localStorage.getItem("authorization");
-
-      const response = await fetch(`${apiUrl}/user/password`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `${authToken}`,
-        },
-        body: JSON.stringify({
-          currentPassword: changePassword.currentPassword,
-          newPassword: changePassword.newPassword,
-          confirmNewPassword: changePassword.confirmNewPassword,
-        }),
+      const response = await fetch(`${apiUrl}/user/file/profile/photo`, {
+        method: "POST",
+        headers: { authorization: authToken },
+        body: formData,
       });
 
       if (response.ok) {
-        setChangePassword({
-          currentPassword: "",
-          newPassword: "",
-          confirmNewPassword: "",
-        });
+        refreshAccount();
       } else {
-        const result = await response.json();
-        console.error(result);
-        alert("Error, see console logs");
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const err = await response.json();
+          alert(err.error || "Upload failed");
+        } else {
+          alert("Upload failed: Server error");
+        }
       }
-    } catch (error) {
-      console.error("Network error:", error);
-      alert("Error, see console logs");
+    } catch (err) {
+      console.error("Upload Error:", err);
     }
-  }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (isGuest) return alert("Guest accounts cannot be deleted.");
+    const confirmDelete = window.confirm(
+      "Are you absolutely sure? This action is permanent and will delete all your data.",
+    );
+
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`${apiUrl}/user/self`, {
+          method: "DELETE",
+          headers: { authorization: authToken },
+        });
+
+        if (response.ok) {
+          alert("Account deleted successfully.");
+          logout();
+        } else {
+          alert("Failed to delete account.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  if (!auth || !account)
+    return (
+      <div className={styles.loginMsg}>
+        <h1>Please Log In to see your account.</h1>
+      </div>
+    );
 
   return (
-    <div className={styles.account}>
-      {auth ? (
-        <>
-          <div key={account.keyID} className={styles.accountInfo}>
-            <h1>ID: {account.id}</h1>
-            <h1>Username: {account.username}</h1>
-            <h1>Display Name: {account.displayName}</h1>
-            <h1>Role: {account.role}</h1>
-            <h1>Bio: {account.bio}</h1>
-            <h1>CreatedAt: {account.createdAt}</h1>
-          </div>
-          <div className={styles.accountInfo}>
-            <fieldset>
-              <label htmlFor="newDisplayName">
-                Change Display Name :{" "}
-                <input
-                  type="text"
-                  name="newDisplayName"
-                  id="newDisplayName"
-                  value={newDisplayName}
-                  onChange={onChangeDisplayName}
-                />
-              </label>
-              <button onClick={submitNewDisplayName}>Change</button>
-            </fieldset>
-            <fieldset>
-              <label htmlFor="newBio">
-                Change Bio :{" "}
-                <input
-                  type="text"
-                  name="newBio"
-                  id="newBio"
-                  value={newBio}
-                  onChange={onChangeNewBio}
-                />
-              </label>
-              <button onClick={submitNewBio}>Change</button>
-            </fieldset>
-            <fieldset>
-              <label htmlFor="newUsername">
-                Change Username :{" "}
-                <input
-                  type="email"
-                  name="newUsername"
-                  id="newUsername"
-                  value={newUsername}
-                  onChange={onChangeNewUsername}
-                />
-              </label>
-              <button onClick={submitNewUsername}>Change</button>
-            </fieldset>
-            <fieldset
-              style={{ display: "flex", flexDirection: "column", gap: "5px" }}
+    <div className={styles.accountContainer}>
+      {isGuest && (
+        <div className={styles.guestNotice}>
+          Viewing as <strong>Guest</strong>. Profile modifications are disabled.
+        </div>
+      )}
+      <section className={styles.profileHeader}>
+        <div className={styles.photoSection}>
+          <img
+            src={account.photo}
+            alt="Profile"
+            className={styles.profileImg}
+          />
+          {!isGuest && (
+            <label className={styles.uploadBtn}>
+              Change Photo
+              <input
+                type="file"
+                hidden
+                onChange={handlePhotoUpload}
+                accept="image/png, image/jpeg"
+              />
+            </label>
+          )}
+        </div>
+        <div className={styles.basicInfo}>
+          <h2>{account.displayName}</h2>
+          <p>{account.username}</p>
+          <p>Joined: {new Date(account.createdAt).toLocaleDateString()}</p>
+          <p>Bio: {account.bio || "No bio yet"}</p>
+        </div>
+      </section>
+
+      <div
+        className={`${styles.settingsGrid} ${isGuest ? styles.disabledArea : ""}`}
+      >
+        {/* Display Name */}
+        <div className={styles.card}>
+          <h3>Display Name</h3>
+          <div className={styles.inputGroup}>
+            <input
+              disabled={isGuest}
+              value={newDisplayName}
+              onChange={(e) => setNewDisplayName(e.target.value)}
+              placeholder={account.displayName}
+            />
+            <button
+              disabled={isGuest}
+              onClick={() =>
+                handlePatch("displayName", { newDisplayName }, "Name updated!")
+              }
             >
-              <label htmlFor="currentPassword">
-                Current Password :{" "}
-                <input
-                  type="password"
-                  name="currentPassword"
-                  id="currentPassword"
-                  value={changePassword.currentPassword}
-                  onChange={onChangeChangePassword}
-                />
-              </label>
-              <label htmlFor="newPassword">
-                New Password :{" "}
-                <input
-                  type="password"
-                  name="newPassword"
-                  id="newPassword"
-                  value={changePassword.newPassword}
-                  onChange={onChangeChangePassword}
-                />
-              </label>
-              <label htmlFor="confirmNewPassword">
-                Confirm New Password :{" "}
-                <input
-                  type="password"
-                  name="confirmNewPassword"
-                  id="confirmNewPassword"
-                  value={changePassword.confirmNewPassword}
-                  onChange={onChangeChangePassword}
-                />
-              </label>
-              <button onClick={submitNewPassword}>Change</button>
-            </fieldset>
+              Update
+            </button>
           </div>
-        </>
-      ) : (
-        <h1>
-          LogIn To
-          <br />
-          See Account Info
-        </h1>
+        </div>
+
+        {/* Bio */}
+        <div className={styles.card}>
+          <h3>Bio</h3>
+          <div className={styles.inputGroup}>
+            <textarea
+              disabled={isGuest}
+              value={newBio}
+              onChange={(e) => setNewBio(e.target.value)}
+              placeholder={account.bio || "Write something about yourself..."}
+            />
+            <button
+              disabled={isGuest}
+              onClick={() => handlePatch("bio", { newBio }, "Bio updated!")}
+            >
+              Update
+            </button>
+          </div>
+        </div>
+
+        {/* Username/Email */}
+        <div className={styles.card}>
+          <h3>Email Address</h3>
+          <div className={styles.inputGroup}>
+            <input
+              type="email"
+              disabled={isGuest}
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+              placeholder={account.username}
+            />
+            <button
+              disabled={isGuest}
+              onClick={() =>
+                handlePatch("userName", { newUsername }, "Username updated!")
+              }
+            >
+              Update
+            </button>
+          </div>
+        </div>
+
+        {/* Password */}
+        <div className={`${styles.card} ${styles.fullWidth}`}>
+          <h3>Security</h3>
+          <div className={styles.passwordFields}>
+            <input
+              type="password"
+              disabled={isGuest}
+              placeholder="Current Password"
+              onChange={(e) =>
+                setPasswords({ ...passwords, currentPassword: e.target.value })
+              }
+            />
+            <input
+              type="password"
+              disabled={isGuest}
+              placeholder="New Password"
+              onChange={(e) =>
+                setPasswords({ ...passwords, newPassword: e.target.value })
+              }
+            />
+            <input
+              type="password"
+              disabled={isGuest}
+              placeholder="Confirm New Password"
+              onChange={(e) =>
+                setPasswords({
+                  ...passwords,
+                  confirmNewPassword: e.target.value,
+                })
+              }
+            />
+            <button
+              disabled={isGuest}
+              onClick={() =>
+                handlePatch("password", passwords, "Password changed!")
+              }
+            >
+              Change Password
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className={styles.actionButtons}>
+        <button className={styles.logoutBtn} onClick={logout}>
+          Logout
+        </button>
+      </div>
+
+      {!isGuest && (
+        <section className={styles.dangerZone}>
+          <h3>Danger Zone</h3>
+          <p>Once you delete your account, there is no going back.</p>
+          <button className={styles.deleteBtn} onClick={handleDeleteAccount}>
+            Delete Account
+          </button>
+        </section>
       )}
     </div>
   );

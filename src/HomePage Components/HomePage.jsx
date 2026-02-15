@@ -1,8 +1,7 @@
 import styles from "./homePage.module.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ItemContext } from "../ItemContext";
-import { useContext } from "react";
 const apiUrl = import.meta.env.VITE_MESSAGING_APP_API_URL;
 
 const HomePage = () => {
