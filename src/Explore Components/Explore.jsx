@@ -1,5 +1,5 @@
 // import { Link } from "react-router-dom";
-import styles from "./posts.module.css";
+import styles from "./explore.module.css";
 // import { useNavigate } from "react-router-dom";
 import { ItemContext } from "../ItemContext";
 import { useContext } from "react";

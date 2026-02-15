@@ -6,78 +6,39 @@ import { ItemContext } from "../ItemContext";
 import { useAppLogic } from "./UseAppLogic";
 
 const App = () => {
-  const {
-    id,
-    auth,
-    setAuth,
-    posts,
-    addPost,
-    editPost,
-    changePostState,
-    deletePost,
-    comments,
-    addComment,
-    changeComment,
-    deleteComment,
-    users,
-    account,
-    changeAccountInfo,
-    profiles,
-    deleteUser,
-  } = useAppLogic();
+  const { auth, setAuth } = useAppLogic();
 
   const value = {
-    id,
     auth,
     setAuth,
-    posts,
-    addPost,
-    editPost,
-    changePostState,
-    deletePost,
-    comments,
-    addComment,
-    changeComment,
-    deleteComment,
-    users,
-    account,
-    changeAccountInfo,
-    profiles,
-    deleteUser,
   };
   return (
     <div className="container">
       <nav>
         <h1>
           <Link to="/">
-            <img src="/logo.jpg" alt="logo" width={25} />
+            <img src="/logo.svg" alt="logo" width={40} />
             Messaging <span style={{ color: "#EE204D" }}>App</span>{" "}
           </Link>
         </h1>
         <section>
-          <div>
-            <select id="chats">
-              <option selected>Chats</option>
-              <option value="people">
-                <Link to="/chats/people">People</Link>
-              </option>
-              <option value="group">
-                <Link to="/chats/groups">Groups</Link>
-              </option>
-            </select>
+          <div className="dropdown">
+            <button className="dropbtn">Chats</button>
+            <div className="dropdown-content">
+              <Link to="/chats/people">People</Link>
+              <Link to="/chats/groups">Groups</Link>
+            </div>
           </div>
-          <div>
-            <select id="explore">
-              <option selected>Explore</option>
-              <option value="people">
-                <Link to="/explore/people">People</Link>
-              </option>
-              <option value="group">
-                <Link to="/explore/groups">Groups</Link>
-              </option>
-            </select>
+          <div className="dropdown">
+            <button className="dropbtn">Explore</button>
+            <div className="dropdown-content">
+              <Link to="/explore/people">People</Link>
+              <Link to="/explore/groups">Groups</Link>
+            </div>
           </div>
-          <Link to="/account">Account</Link>
+          <button className="dropbtn">
+            <Link to="/account">Account</Link>
+          </button>
         </section>
       </nav>
       <>

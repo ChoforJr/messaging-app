@@ -2,6 +2,7 @@ import App from "./App Components/App";
 import HomePage from "./HomePage Components/HomePage";
 import { PeopleChats, GroupChats } from "./Chats Components/Chats";
 import { ExplorePeople, ExploreGroups } from "./Explore Components/Explore";
+import Account from "./Account Components/Account";
 import ErrorPage from "./ErrorPage";
 
 const routes = [

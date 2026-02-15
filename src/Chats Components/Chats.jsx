@@ -1,4 +1,4 @@
-import styles from "./post.module.css";
+import styles from "./chats.module.css";
 // import { useState, useEffect } from "react";
 import { ItemContext } from "../ItemContext";
 import { useContext } from "react";

@@ -1,18 +1,73 @@
-.homePage {
-  background-color: #20b2aa;
+.signIn {
+  background-color: #b0c4de;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  width: 25rem;
+  width: 80rem;
+  height: 30rem;
   justify-self: center;
   text-align: center;
-  margin-top: 5rem;
+  margin-top: 2rem;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
 }
-.homePage h1 {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #e6e6fa;
+.signIn section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 10px 10px 5px 5px rgba(0, 0, 0, 0.5);
+  background-color: #7b68ee;
+  width: 30rem;
+  border-radius: 0.5rem;
+  height: 20rem;
 }
-.homePage:hover {
+.signIn section h1 {
+  color: #b0c4de;
+}
+.signIn h1 {
+  align-self: center;
+  color: #7b68ee;
+}
+.signIn label {
+  font-size: 2rem;
+}
+.submit {
+  align-self: flex-end;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+  font-size: 1.4rem;
+  background-color: green;
+  color: yellow;
+  border-radius: 0.5rem;
+}
+.switch {
+  background-color: #b0c4de;
+}
+
+.guest article {
+  display: flex;
+  align-self: center;
+  /* border: 0.2rem #b0c4de solid; */
+  background-color: #b0c4de;
+  box-shadow: 10px 10px 5px 5px rgba(0, 0, 0, 0.5);
+  width: 15rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: space-around;
+  height: 7rem;
+  align-items: center;
+  color: #7b68ee;
+}
+.guest img {
+  width: 5rem;
+  height: 6rem;
+  border-radius: 0.75rem;
+}
+.guest article:hover {
   cursor: pointer;
-  transform: scale(1.075);
+}
+.guest article h2 {
+  font-size: 2.25rem;
 }
