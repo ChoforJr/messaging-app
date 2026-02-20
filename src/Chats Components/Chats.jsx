@@ -2,7 +2,7 @@ import styles from "./chats.module.css";
 // import { useState, useEffect } from "react";
 import { ItemContext } from "../ItemContext";
 import { useContext } from "react";
-// const apiUrl = import.meta.env.MESSAGING_APP_API_URL;
+// const apiUrl = import.meta.env.VITE_MESSAGING_APP_API_URL;
 
 export const PeopleChats = () => {
   const { auth } = useContext(ItemContext);
@@ -11,8 +11,8 @@ export const PeopleChats = () => {
     <div className={styles.chatBody}>
       {auth ? (
         <>
-          <section className={styles.contacts}></section>
-          <section className={styles.messages}></section>
+          <section className={`${styles.left} ${styles.contacts}`}></section>
+          <section className={`${styles.right} ${styles.messages}`}></section>
         </>
       ) : (
         <h1>
@@ -32,8 +32,10 @@ export const GroupChats = () => {
     <div className={styles.chatBody}>
       {auth ? (
         <>
-          <section className={styles.joinedGroups}></section>
-          <section className={styles.messages}></section>
+          <section
+            className={`${styles.left} ${styles.joinedGroups}`}
+          ></section>
+          <section className={`${styles.right} ${styles.messages}`}></section>
         </>
       ) : (
         <h1>

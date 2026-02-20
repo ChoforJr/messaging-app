@@ -17,7 +17,15 @@ const HomePage = () => {
   });
   const [signIn, setSignIn] = useState(true);
   const [loading, setLoading] = useState(false);
-  const { setAuth } = useContext(ItemContext);
+  const {
+    setAuth,
+    refreshAccount,
+    refreshContacts,
+    refreshExplorePeople,
+    refreshMemberGroups,
+    refreshExploreGroups,
+    refreshAllProfiles,
+  } = useContext(ItemContext);
 
   function onChangeHandlerLogin(event) {
     const { name, value } = event.target;
@@ -62,6 +70,12 @@ const HomePage = () => {
       if (response.ok) {
         localStorage.setItem("authorization", `Bearer ${data.token}`);
         setAuth(true);
+        refreshAccount();
+        refreshContacts();
+        refreshExplorePeople();
+        refreshMemberGroups();
+        refreshExploreGroups();
+        refreshAllProfiles();
         navigate("/account", { replace: false });
       } else if (response.status === 400) {
         const errorMessages = data.errors.map((err) => err.msg).join("\n");

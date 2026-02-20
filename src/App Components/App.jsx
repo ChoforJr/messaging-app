@@ -6,14 +6,48 @@ import { ItemContext } from "../ItemContext";
 import { useAppLogic } from "./UseAppLogic";
 
 const App = () => {
-  const { auth, setAuth, account, refreshAccount, logout } = useAppLogic();
+  const {
+    auth,
+    setAuth,
+    account,
+    refreshAccount,
+    contacts,
+    refreshContacts,
+    explorePeople,
+    refreshExplorePeople,
+    memberGroups,
+    refreshMemberGroups,
+    exploreGroups,
+    refreshExploreGroups,
+    allProfiles,
+    refreshAllProfiles,
+    contactMessages,
+    groupMessages,
+    logout,
+    refreshRecentContactMessages,
+    refreshRecentGroupMessages,
+  } = useAppLogic();
 
   const value = {
     auth,
     setAuth,
     account,
     refreshAccount,
+    contacts,
+    refreshContacts,
+    explorePeople,
+    refreshExplorePeople,
+    memberGroups,
+    refreshMemberGroups,
+    exploreGroups,
+    refreshExploreGroups,
+    allProfiles,
+    refreshAllProfiles,
+    contactMessages,
+    groupMessages,
     logout,
+    refreshRecentContactMessages,
+    refreshRecentGroupMessages,
   };
   return (
     <div className="container">
