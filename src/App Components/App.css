@@ -45,6 +45,7 @@ nav {
   position: sticky;
   top: 0;
   background-color: #191970;
+  z-index: 9999;
 }
 nav a {
   color: #e6e6fa;
@@ -75,6 +76,7 @@ nav section {
   background-color: #f9f9f9;
   min-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
 }
 
 /* Links inside dropdown content */

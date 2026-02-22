@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_MESSAGING_APP_API_URL;
@@ -286,99 +286,103 @@ export function useAppLogic() {
     }
   };
 
-  const addContactMessages = useCallback((newMessages) => {
+  function addContactMessages(newMessages) {
     setContactMessages((prevMessages) => {
       return [...prevMessages, newMessages];
     });
-  }, []);
+  }
 
-  const getRecentContactMessages = useCallback(
-    async (authToken) => {
-      try {
-        const response = await fetch(`${apiUrl}/message/recent`, {
-          method: "GET",
-          headers: { authorization: `${authToken}` },
-          body: JSON.stringify({
-            recentDate:
-              contactMessages?.[contactMessages.length - 1]?.createdAt || null,
-          }),
-        });
-        if (response.ok) {
-          const result = await response.json();
-          result.forEach((item) => {
-            addContactMessages({
-              id: item.id,
+  async function getRecentContactMessages(authToken) {
+    if (!contactMessages || contactMessages.length === 0) {
+      return;
+    }
+    try {
+      const response = await fetch(`${apiUrl}/message/recent`, {
+        method: "POST",
+        headers: {
+          authorization: `${authToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          recentDate: contactMessages?.[contactMessages.length - 1]?.createdAt,
+        }),
+      });
+      if (response.ok) {
+        const result = await response.json();
+        result.forEach((item) => {
+          addContactMessages({
+            id: item.id,
+            keyID: crypto.randomUUID(),
+            createdAt: item.createdAt,
+            content: item.content,
+            toUserId: item.toUserId,
+            authorId: item.authorId,
+            files: item.Files.map((file) => ({
               keyID: crypto.randomUUID(),
-              createdAt: item.createdAt,
-              content: item.content,
-              toUserId: item.toUserId,
-              authorId: item.authorId,
-              files: item.Files.map((file) => ({
-                keyID: crypto.randomUUID(),
-                originalName: file.originalName,
-                size: file.size,
-                photo: file.url,
-                photoId: file.id,
-              })),
-            });
+              originalName: file.originalName,
+              size: file.size,
+              photo: file.url,
+              photoId: file.id,
+            })),
           });
-        } else if (response.status === 401) {
-          setAuth(false);
-          localStorage.removeItem("authorization");
-        }
-      } catch (error) {
-        console.error("Network error:", error);
+        });
+      } else if (response.status === 401) {
+        setAuth(false);
+        localStorage.removeItem("authorization");
       }
-    },
-    [addContactMessages, contactMessages],
-  );
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  }
 
-  const addGroupMessages = useCallback((newMessages) => {
+  function addGroupMessages(newMessages) {
     setGroupMessages((prevMessages) => {
       return [...prevMessages, newMessages];
     });
-  }, []);
+  }
 
-  const getRecentGroupMessages = useCallback(
-    async (authToken) => {
-      try {
-        const response = await fetch(`${apiUrl}/message/recent/groups`, {
-          method: "GET",
-          headers: { authorization: `${authToken}` },
-          body: JSON.stringify({
-            recentDate:
-              groupMessages?.[groupMessages.length - 1]?.createdAt || null,
-          }),
-        });
-        if (response.ok) {
-          const result = await response.json();
-          result.forEach((item) => {
-            addGroupMessages({
-              id: item.id,
+  async function getRecentGroupMessages(authToken) {
+    if (!groupMessages || groupMessages.length === 0) {
+      return;
+    }
+    try {
+      const response = await fetch(`${apiUrl}/message/recent/groups`, {
+        method: "POST",
+        headers: {
+          authorization: `${authToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          recentDate: groupMessages?.[groupMessages.length - 1]?.createdAt,
+        }),
+      });
+      if (response.ok) {
+        const result = await response.json();
+        result.forEach((item) => {
+          addGroupMessages({
+            id: item.id,
+            keyID: crypto.randomUUID(),
+            createdAt: item.createdAt,
+            content: item.content,
+            toGroupId: item.toGroupId,
+            authorId: item.authorId,
+            files: item.Files.map((file) => ({
               keyID: crypto.randomUUID(),
-              createdAt: item.createdAt,
-              content: item.content,
-              toGroupId: item.toGroupId,
-              authorId: item.authorId,
-              files: item.Files.map((file) => ({
-                keyID: crypto.randomUUID(),
-                originalName: file.originalName,
-                size: file.size,
-                photo: file.url,
-                photoId: file.id,
-              })),
-            });
+              originalName: file.originalName,
+              size: file.size,
+              photo: file.url,
+              photoId: file.id,
+            })),
           });
-        } else if (response.status === 401) {
-          setAuth(false);
-          localStorage.removeItem("authorization");
-        }
-      } catch (error) {
-        console.error("Network error:", error);
+        });
+      } else if (response.status === 401) {
+        setAuth(false);
+        localStorage.removeItem("authorization");
       }
-    },
-    [addGroupMessages, groupMessages],
-  );
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  }
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -394,21 +398,6 @@ export function useAppLogic() {
       getGroupMessages(authToken);
     }
   }, []);
-
-  useEffect(() => {
-    const authToken = localStorage.getItem("authorization");
-
-    const key = setInterval(() => {
-      if (authToken) {
-        getRecentContactMessages(authToken);
-        getRecentGroupMessages(authToken);
-      }
-    }, 10000);
-
-    return () => {
-      clearInterval(key);
-    };
-  }, [getRecentContactMessages, getRecentGroupMessages]);
 
   const logout = () => {
     localStorage.removeItem("authorization");

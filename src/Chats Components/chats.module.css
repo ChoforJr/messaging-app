@@ -3,20 +3,405 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-}
-.left {
-  background-color: #33006f;
-  border: 2px solid #33006f;
-  border-bottom: 8px solid #452c63; /* The 'thickness' */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  width: 30rem;
-  height: 32rem;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a0033 0%, #2d0052 100%);
+  min-height: 100vh;
 }
 
-.right {
-  border: 0.1rem black solid;
+.contacts,
+.groups {
+  background: linear-gradient(135deg, #33006f 0%, #4a1a7f 100%);
+  border: none;
+  border-radius: 16px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
   width: 30rem;
-  height: 32rem;
+  height: 40rem;
+  overflow-y: auto;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.contacts::-webkit-scrollbar,
+.groups::-webkit-scrollbar {
+  width: 8px;
+}
+
+.contacts::-webkit-scrollbar-track,
+.groups::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.contacts::-webkit-scrollbar-thumb,
+.groups::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 10px;
+}
+
+.contacts::-webkit-scrollbar-thumb:hover,
+.groups::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+}
+
+.contacts:hover,
+.groups:hover {
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(4px);
+}
+
+.contact img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact div {
+  flex: 1;
+}
+
+.contact p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.contact button {
+  background: rgba(255, 59, 48, 0.8);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.contact button:hover {
+  background: rgba(255, 59, 48, 1);
+  transform: scale(1.05);
+}
+
+.messages {
+  background: linear-gradient(135deg, #2a0047 0%, #1a0033 100%);
+  border: none;
+  border-radius: 16px;
+  width: 30rem;
+  height: 40rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.messagesHeader {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.messagesHeader:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.messagesHeader img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.messagesHeader span {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.messagesContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.messagesContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messagesContainer::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.messagesContainer::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 10px;
+}
+
+.messagesContainer::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+}
+
+.messages > div:first-child {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.messages > div:first-child:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.messages > div:first-child img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.message {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideIn 0.3s ease;
+  word-wrap: break-word;
+  max-width: 80%;
+}
+
+.message.userMessage {
+  align-self: flex-end;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.3) 0%,
+    rgba(139, 92, 246, 0.3) 100%
+  );
+  border: 1px solid rgba(99, 102, 241, 0.4);
+}
+
+.message.contactMessage {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.message span {
+  display: block;
+  font-size: 0.75rem;
+  color: #b0b0d0;
+  margin-top: 0.5rem;
+}
+
+.downloadBtn {
+  width: 100%;
+  padding: 0.6rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  margin-bottom: 0.5rem;
+}
+
+.downloadBtn:hover {
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+}
+
+.downloadBtn:active {
+  transform: translateY(0);
+}
+
+.conversationImage {
+  width: 28rem;
+  height: 28rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.messages > div:not(:first-child):not(.message)::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages > div:not(:first-child):not(.message)::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.messages > div:not(:first-child):not(.message)::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 10px;
+}
+
+.messages > div:not(:first-child):not(.message)::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+}
+
+.messages h1 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #e6e6fa;
+  font-family: inherit;
+  resize: none;
+  transition: all 0.2s ease;
+}
+
+textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+button:hover {
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.uploadBtn {
+  padding: 1rem 1.5rem;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.uploadBtn:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+}
+
+.sendMessageSection {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.sendMessageSection button {
+  width: 100%;
+  padding: 0.6rem 1rem;
+}
+
+.sendMessageSection textarea {
+  width: 100%;
+  height: 60px;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #e6e6fa;
+  font-family: inherit;
+  resize: none;
+  transition: all 0.2s ease;
+}
+
+.sendMessageSection textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.sendMessageSection p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #b0b0d0;
 }
