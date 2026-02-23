@@ -645,7 +645,7 @@ export const GroupChats = () => {
                     <button onClick={(e) => handleLeaveGroup(e, group.id)}>
                       Leave Group <UserMinus />
                     </button>
-                    {account?.id === group.adminId && (
+                    {account?.profileId === group.adminId && (
                       <button
                         onClick={(e) => handleEditGroup(e, group)}
                         className={styles.editGroupBtn}

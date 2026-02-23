@@ -39,6 +39,7 @@ export function useAppLogic() {
 
         setAccount({
           id: result.id,
+          profileId: result.profile.id,
           keyID: crypto.randomUUID(),
           username: result.username,
           createdAt: result.createdAt,
