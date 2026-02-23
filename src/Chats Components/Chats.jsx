@@ -65,7 +65,7 @@ export const PeopleChats = () => {
     }
     try {
       const response = await fetch(
-        `${apiUrl}/message/image/chat/toUser/${currentContact.id}`,
+        `${apiUrl}/message/image/chat/toUser/${currentContact.userId}`,
         {
           method: "POST",
           headers: { authorization: authToken },
@@ -99,7 +99,7 @@ export const PeopleChats = () => {
         },
         body: JSON.stringify({
           content: messageText,
-          toUserID: currentContact.id,
+          toUserID: currentContact.userId,
         }),
       });
 
@@ -153,7 +153,7 @@ export const PeopleChats = () => {
                   <img src={contact.photo} alt={contact.displayName} />
                   <div>
                     <p>{contact.displayName}</p>
-                    <button onClick={(e) => handleUnfollow(e, contact.id)}>
+                    <button onClick={(e) => handleUnfollow(e, contact.userId)}>
                       Unfollow <UserMinus />
                     </button>
                   </div>
@@ -180,8 +180,8 @@ export const PeopleChats = () => {
                     ? contactMessages
                         .filter(
                           (msg) =>
-                            msg.toUserId === currentContact.id ||
-                            msg.authorId === currentContact.id,
+                            msg.toUserId === currentContact.userId ||
+                            msg.authorId === currentContact.userId,
                         )
                         .sort(
                           (a, b) =>

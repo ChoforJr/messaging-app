@@ -59,7 +59,7 @@ export const ExplorePeople = () => {
             <div>
               <h2>{item.displayName}</h2>
               <p>{item.bio}</p>
-              <button onClick={() => handleConnect(item.id)}>follow</button>
+              <button onClick={() => handleConnect(item.userId)}>follow</button>
             </div>
           </article>
         ))
