@@ -2,7 +2,7 @@ import styles from "./chats.module.css";
 import { useState, useRef } from "react";
 import { ItemContext } from "../ItemContext";
 import { useContext } from "react";
-import { UserMinus } from "lucide-react";
+import { UserMinus, Pencil } from "lucide-react";
 const apiUrl = import.meta.env.VITE_MESSAGING_APP_API_URL;
 import { Download } from "lucide-react";
 
@@ -144,21 +144,22 @@ export const PeopleChats = () => {
       {auth ? (
         <>
           <section className={styles.contacts}>
-            {contacts.map((contact) => (
-              <div
-                key={contact.keyID}
-                className={styles.contact}
-                onClick={(e) => handleContactClick(e, contact)}
-              >
-                <img src={contact.photo} alt={contact.displayName} />
-                <div>
-                  <p>{contact.displayName}</p>
-                  <button onClick={(e) => handleUnfollow(e, contact.id)}>
-                    Unfollow <UserMinus />
-                  </button>
+            {contacts &&
+              contacts.map((contact) => (
+                <div
+                  key={contact.keyID}
+                  className={styles.contact}
+                  onClick={(e) => handleContactClick(e, contact)}
+                >
+                  <img src={contact.photo} alt={contact.displayName} />
+                  <div>
+                    <p>{contact.displayName}</p>
+                    <button onClick={(e) => handleUnfollow(e, contact.id)}>
+                      Unfollow <UserMinus />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </section>
           <section className={styles.messages}>
             {currentContact ? (
@@ -305,12 +306,14 @@ export const GroupChats = () => {
   const [currentGroup, setCurrentGroup] = useState(null);
   const [messageType, setMessageType] = useState("text");
   const [messageText, setMessageText] = useState("");
-  const [createGroupName, setCreateGroupName] = useState({
+  const [createGroup, setCreateGroup] = useState({
     name: "",
     description: "",
   });
+  const [editGroup, setEditGroup] = useState(null);
 
   const createGroupRef = useRef();
+  const editGroupRef = useRef();
 
   const authToken = localStorage.getItem("authorization");
 
@@ -434,13 +437,17 @@ export const GroupChats = () => {
 
   function onChangeGroupProp(e) {
     const { name, value } = e.target;
-    setCreateGroupName((prev) => ({
+    setCreateGroup((prev) => ({
       ...prev,
       [name]: value,
     }));
   }
 
   const submitGroup = async () => {
+    if (!createGroup.name || !createGroup.description) {
+      alert("Please fill in all fields");
+      return;
+    }
     try {
       const response = await fetch(`${apiUrl}/group/create`, {
         method: "POST",
@@ -448,13 +455,13 @@ export const GroupChats = () => {
           "Content-Type": "application/json",
           authorization: authToken,
         },
-        body: JSON.stringify(createGroupName),
+        body: JSON.stringify(createGroup),
       });
 
       if (response.ok) {
         refreshMemberGroups();
         refreshExploreGroups();
-        setCreateGroupName({ name: "", description: "" });
+        setCreateGroup({ name: "", description: "" });
         createGroupRef.current.close();
       } else {
         const err = await response.json();
@@ -466,29 +473,239 @@ export const GroupChats = () => {
   };
 
   function closeCreateGroup() {
-    setCreateGroupName({ name: "", description: "" });
+    setCreateGroup({ name: "", description: "" });
     createGroupRef.current.close();
   }
+
+  function handleEditGroup(e, group) {
+    e.stopPropagation();
+    setEditGroup(group);
+    editGroupRef.current.showModal();
+  }
+
+  function closeEditGroup() {
+    setEditGroup(null);
+    editGroupRef.current.close();
+  }
+
+  function onChangeEditGroupProp(e) {
+    const { name, value } = e.target;
+    setEditGroup((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  const submitEditGroup = async (prop) => {
+    let editData;
+    if (prop === "name") {
+      if (!editGroup.name) {
+        alert("Please fill in the name field");
+        return;
+      }
+      editData = { name: editGroup.name };
+    } else if (prop === "description") {
+      if (!editGroup.description) {
+        alert("Please fill in the description field");
+        return;
+      }
+      editData = { description: editGroup.description };
+    } else {
+      alert("Invalid property to edit");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiUrl}/group/${prop}/${editGroup.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: authToken,
+        },
+        body: JSON.stringify(editData),
+      });
+
+      if (response.ok) {
+        refreshMemberGroups();
+        refreshExploreGroups();
+        closeEditGroup();
+      } else {
+        const err = await response.json();
+        alert(err.error || "Server error: Message not sent");
+      }
+    } catch (err) {
+      console.error("Upload Error:", err);
+    }
+  };
+
+  async function deletePhoto() {
+    try {
+      const response = await fetch(
+        `${apiUrl}/group/file/group/photo/${editGroup.profilePhotoId}`,
+        {
+          method: "DELETE",
+          headers: { authorization: authToken },
+        },
+      );
+
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const err = await response.json();
+          alert(err.error || "Delete failed");
+        } else {
+          alert("Delete failed: Server error");
+        }
+      }
+    } catch (err) {
+      console.error("Delete Error:", err);
+    }
+  }
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("uploads", file);
+
+    if (editGroup.profilePhotoId) {
+      await deletePhoto();
+    }
+
+    try {
+      const response = await fetch(
+        `${apiUrl}/group/file/group/photo/${editGroup.id}`,
+        {
+          method: "POST",
+          headers: { authorization: authToken },
+          body: formData,
+        },
+      );
+
+      if (response.ok) {
+        refreshMemberGroups();
+        refreshExploreGroups();
+        closeEditGroup();
+      } else {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const err = await response.json();
+          alert(err.error || "Upload failed");
+        } else {
+          alert("Upload failed: Server error");
+        }
+      }
+    } catch (err) {
+      console.error("Upload Error:", err);
+    }
+  };
+
+  const handleDeleteGroup = async (e) => {
+    const confirmDelete = window.confirm(
+      "Are you absolutely sure? This action is permanent and will delete all your data.",
+    );
+
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`${apiUrl}/group/delete/${editGroup.id}`, {
+          method: "DELETE",
+          headers: { authorization: authToken },
+        });
+
+        if (response.ok) {
+          alert("Group deleted successfully.");
+          refreshMemberGroups();
+          refreshExploreGroups();
+          closeEditGroup();
+          clearMessages(e);
+        } else {
+          alert("Failed to delete group.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   return (
     <div className={styles.chatBody}>
       {auth ? (
         <>
           <section className={styles.groups}>
-            {memberGroups.map((group) => (
-              <div
-                key={group.keyID}
-                className={styles.contact}
-                onClick={(e) => handleGroupClick(e, group)}
-              >
-                <img src={group.profilePhoto} alt={group.name} />
-                <div>
-                  <p>{group.name}</p>
-                  <button onClick={(e) => handleLeaveGroup(e, group.id)}>
-                    Leave Group <UserMinus />
-                  </button>
+            {memberGroups &&
+              memberGroups.map((group) => (
+                <div
+                  key={group.keyID}
+                  className={styles.contact}
+                  onClick={(e) => handleGroupClick(e, group)}
+                >
+                  <img src={group.profilePhoto} alt={group.name} />
+                  <div>
+                    <p>{group.name}</p>
+                    <button onClick={(e) => handleLeaveGroup(e, group.id)}>
+                      Leave Group <UserMinus />
+                    </button>
+                    {account?.id === group.adminId && (
+                      <button
+                        onClick={(e) => handleEditGroup(e, group)}
+                        className={styles.editGroupBtn}
+                      >
+                        <Pencil />
+                      </button>
+                    )}
+                    <dialog
+                      ref={editGroupRef}
+                      className={styles.editGroupDialog}
+                    >
+                      <button onClick={closeEditGroup}>Close</button>
+                      <label htmlFor="nameChange">
+                        Change Name:{" "}
+                        <input
+                          type="text"
+                          name="name"
+                          id="nameChange"
+                          placeholder="group name"
+                          value={editGroup?.name || ""}
+                          onChange={onChangeEditGroupProp}
+                        />
+                        <button onClick={() => submitEditGroup("name")}>
+                          Submit Name Change
+                        </button>
+                      </label>
+                      <label htmlFor="descriptionChange">
+                        Change Description:{" "}
+                        <input
+                          type="text"
+                          name="description"
+                          id="descriptionChange"
+                          placeholder="group description"
+                          value={editGroup?.description || ""}
+                          onChange={onChangeEditGroupProp}
+                        />
+                        <button onClick={() => submitEditGroup("description")}>
+                          Submit Description Change
+                        </button>
+                      </label>
+                      <label className={styles.changeGroupPhotoBtn}>
+                        Change Photo
+                        <input
+                          type="file"
+                          hidden
+                          onChange={handlePhotoUpload}
+                          accept="image/png, image/jpeg"
+                        />
+                      </label>
+                      <button
+                        className={styles.deleteGroupBtn}
+                        onClick={(e) => handleDeleteGroup(e)}
+                      >
+                        Delete Group
+                      </button>
+                    </dialog>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </section>
           <section className={styles.messages}>
             <button onClick={() => createGroupRef.current.showModal()}>
@@ -503,7 +720,7 @@ export const GroupChats = () => {
                   name="name"
                   id="name"
                   placeholder="group name"
-                  value={createGroupName.name}
+                  value={createGroup.name}
                   onChange={onChangeGroupProp}
                 />
               </label>
@@ -514,7 +731,7 @@ export const GroupChats = () => {
                   name="description"
                   id="description"
                   placeholder="group description"
-                  value={createGroupName.description}
+                  value={createGroup.description}
                   onChange={onChangeGroupProp}
                 />
               </label>

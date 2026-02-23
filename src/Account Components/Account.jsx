@@ -83,7 +83,9 @@ const Account = () => {
     const formData = new FormData();
     formData.append("uploads", file);
 
-    await deletePhoto();
+    if (account.photoId) {
+      await deletePhoto();
+    }
 
     try {
       const response = await fetch(`${apiUrl}/user/file/profile/photo`, {

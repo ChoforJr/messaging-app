@@ -508,3 +508,124 @@ button:active {
 .createGroupDialog button:last-child:hover {
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
 }
+
+/* Modern edit group button (small circular icon) */
+.editGroupBtn {
+  background: linear-gradient(135deg, #ff8a65 0%, #ff5252 100%);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+  flex-shrink: 0;
+}
+
+.editGroupBtn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 82, 82, 0.18);
+}
+
+/* Compact, modern dialog for editing groups */
+.editGroupDialog {
+  background: linear-gradient(
+    180deg,
+    rgba(20, 8, 32, 0.95),
+    rgba(40, 12, 48, 0.98)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow:
+    0 18px 50px rgba(5, 2, 20, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px) saturate(120%);
+  color: #f6f6fb;
+  min-width: 320px;
+  max-width: 420px;
+}
+
+.editGroupDialog::backdrop {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  backdrop-filter: blur(6px);
+}
+
+.editGroupDialog button:first-child {
+  align-self: flex-end;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border-radius: 8px;
+}
+
+.editGroupDialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.editGroupDialog input {
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  color: #f6f6fb;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition:
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.editGroupDialog input:focus {
+  outline: none;
+  border-color: rgba(255, 130, 130, 0.85);
+  box-shadow: 0 0 0 6px rgba(255, 82, 82, 0.08);
+}
+
+.editGroupDialog .deleteGroupBtn {
+  background: linear-gradient(135deg, #ff5252 0%, #ff1744 100%);
+  color: white;
+  border: none;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Change group photo button (styled label) */
+.changeGroupPhotoBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  background: linear-gradient(135deg, #6ee7b7 0%, #34d399 100%);
+  color: #043027;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-weight: 600;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.changeGroupPhotoBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(52, 211, 153, 0.14);
+}
+
+.changeGroupPhotoBtn input[type="file"] {
+  display: none;
+}
