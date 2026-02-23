@@ -218,6 +218,7 @@ export function useAppLogic() {
           }
           return {
             id: item.id,
+            userId: item.userId,
             keyID: crypto.randomUUID(),
             createdAt: item.createdAt,
             displayName: item.displayName,

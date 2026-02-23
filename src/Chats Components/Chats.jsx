@@ -2,9 +2,8 @@ import styles from "./chats.module.css";
 import { useState, useRef } from "react";
 import { ItemContext } from "../ItemContext";
 import { useContext } from "react";
-import { UserMinus, Pencil } from "lucide-react";
+import { UserMinus, Pencil, Download } from "lucide-react";
 const apiUrl = import.meta.env.VITE_MESSAGING_APP_API_URL;
-import { Download } from "lucide-react";
 
 export const PeopleChats = () => {
   const {
@@ -771,7 +770,7 @@ export const GroupChats = () => {
                                     src={
                                       allProfiles.filter(
                                         (profile) =>
-                                          profile.id === msg.authorId,
+                                          profile.userId === msg.authorId,
                                       )[0]?.photo || "/default avatar.png"
                                     }
                                     alt="Author"
@@ -779,7 +778,8 @@ export const GroupChats = () => {
                                   />
                                   <span className={styles.authorName}>
                                     {allProfiles.filter(
-                                      (profile) => profile.id === msg.authorId,
+                                      (profile) =>
+                                        profile.userId === msg.authorId,
                                     )[0]?.displayName || "Unknown User"}
                                   </span>
                                 </div>
@@ -799,7 +799,7 @@ export const GroupChats = () => {
                                       src={
                                         allProfiles.filter(
                                           (profile) =>
-                                            profile.id === msg.authorId,
+                                            profile.userId === msg.authorId,
                                         )[0]?.photo || "/default avatar.png"
                                       }
                                       alt="Author"
@@ -808,7 +808,7 @@ export const GroupChats = () => {
                                     <span className={styles.authorName}>
                                       {allProfiles.filter(
                                         (profile) =>
-                                          profile.id === msg.authorId,
+                                          profile.userId === msg.authorId,
                                       )[0]?.displayName || "Unknown User"}
                                     </span>
                                   </div>
