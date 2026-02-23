@@ -1,5 +1,5 @@
 import styles from "./chats.module.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ItemContext } from "../ItemContext";
 import { useContext } from "react";
 import { UserMinus } from "lucide-react";
@@ -305,6 +305,13 @@ export const GroupChats = () => {
   const [currentGroup, setCurrentGroup] = useState(null);
   const [messageType, setMessageType] = useState("text");
   const [messageText, setMessageText] = useState("");
+  const [createGroupName, setCreateGroupName] = useState({
+    name: "",
+    description: "",
+  });
+
+  const createGroupRef = useRef();
+
   const authToken = localStorage.getItem("authorization");
 
   const handleLeaveGroup = async (e, contactID) => {
@@ -425,6 +432,43 @@ export const GroupChats = () => {
     }
   }
 
+  function onChangeGroupProp(e) {
+    const { name, value } = e.target;
+    setCreateGroupName((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  const submitGroup = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/group/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: authToken,
+        },
+        body: JSON.stringify(createGroupName),
+      });
+
+      if (response.ok) {
+        refreshMemberGroups();
+        refreshExploreGroups();
+        setCreateGroupName({ name: "", description: "" });
+        createGroupRef.current.close();
+      } else {
+        const err = await response.json();
+        alert(err.error || "Server error: Message not sent");
+      }
+    } catch (err) {
+      console.error("Upload Error:", err);
+    }
+  };
+
+  function closeCreateGroup() {
+    setCreateGroupName({ name: "", description: "" });
+    createGroupRef.current.close();
+  }
   return (
     <div className={styles.chatBody}>
       {auth ? (
@@ -447,7 +491,35 @@ export const GroupChats = () => {
             ))}
           </section>
           <section className={styles.messages}>
-            <button>Create a Group</button>
+            <button onClick={() => createGroupRef.current.showModal()}>
+              Create a Group
+            </button>
+            <dialog ref={createGroupRef} className={styles.createGroupDialog}>
+              <button onClick={closeCreateGroup}>Close</button>
+              <label htmlFor="name">
+                Name:{" "}
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="group name"
+                  value={createGroupName.name}
+                  onChange={onChangeGroupProp}
+                />
+              </label>
+              <label htmlFor="description">
+                Description:{" "}
+                <input
+                  type="text"
+                  name="description"
+                  id="description"
+                  placeholder="group description"
+                  value={createGroupName.description}
+                  onChange={onChangeGroupProp}
+                />
+              </label>
+              <button onClick={submitGroup}>Submit</button>
+            </dialog>
             {currentGroup ? (
               <>
                 <div

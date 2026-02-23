@@ -437,3 +437,74 @@ button:active {
   font-size: 0.75rem;
   color: #b0b0d0;
 }
+
+.createGroupDialog {
+  background: linear-gradient(135deg, #1a0033 0%, #2d0052 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: #e6e6fa;
+  min-width: 350px;
+}
+
+.createGroupDialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.createGroupDialog button:first-child {
+  align-self: flex-end;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background: rgba(255, 59, 48, 0.8);
+}
+
+.createGroupDialog button:first-child:hover {
+  background: rgba(255, 59, 48, 1);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.4);
+}
+
+.createGroupDialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.createGroupDialog input {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #e6e6fa;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.createGroupDialog input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.createGroupDialog input::placeholder {
+  color: #9090b0;
+}
+
+.createGroupDialog button:last-child {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.createGroupDialog button:last-child:hover {
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
