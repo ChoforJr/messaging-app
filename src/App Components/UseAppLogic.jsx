@@ -24,14 +24,27 @@ export function useAppLogic() {
       });
       if (response.ok) {
         const result = await response.json();
+        let profilePhoto = result.profile.photo?.url || "/default avatar.png";
+        if (
+          result.profile.type === "guest" &&
+          result.username === "goku@gmail.com"
+        ) {
+          profilePhoto = "/goku.jpeg";
+        } else if (
+          result.profile.type === "guest" &&
+          result.username === "vegeta@gmail.com"
+        ) {
+          profilePhoto = "/vegeta.jpg";
+        }
+
         setAccount({
           id: result.id,
           keyID: crypto.randomUUID(),
           username: result.username,
           createdAt: result.createdAt,
           displayName: result.profile.displayName,
-          bio: result.profile.bio,
-          photo: result.profile.photo?.url || "/default avatar.png",
+          bio: result.profile.bio || "No Bio Available",
+          photo: profilePhoto,
           photoId: result.profile.photo?.id,
         });
         setAuth(true);
@@ -55,13 +68,19 @@ export function useAppLogic() {
       if (response.ok) {
         const result = await response.json();
         const neededItems = result.following.map((item) => {
+          let profilePhoto = item.photo?.url || "/default avatar.png";
+          if (item.type === "guest" && item.displayName === "Goku") {
+            profilePhoto = "/goku.jpeg";
+          } else if (item.type === "guest" && item.displayName === "Vegeta") {
+            profilePhoto = "/vegeta.jpg";
+          }
           return {
             id: item.id,
             keyID: crypto.randomUUID(),
             createdAt: item.createdAt,
             displayName: item.displayName,
             bio: item.bio || "No Bio Available",
-            photo: item.photo?.url || "/default avatar.png",
+            photo: profilePhoto,
             photoId: item.photo?.id,
           };
         });
@@ -87,13 +106,19 @@ export function useAppLogic() {
       if (response.ok) {
         const result = await response.json();
         const neededItems = result.map((item) => {
+          let profilePhoto = item.photo?.url || "/default avatar.png";
+          if (item.type === "guest" && item.displayName === "Goku") {
+            profilePhoto = "/goku.jpeg";
+          } else if (item.type === "guest" && item.displayName === "Vegeta") {
+            profilePhoto = "/vegeta.jpg";
+          }
           return {
             id: item.id,
             keyID: crypto.randomUUID(),
             createdAt: item.createdAt,
             displayName: item.displayName,
             bio: item.bio || "No Bio Available",
-            photo: item.photo?.url || "/default avatar.png",
+            photo: profilePhoto,
             photoId: item.photo?.id,
           };
         });
@@ -124,7 +149,7 @@ export function useAppLogic() {
             keyID: crypto.randomUUID(),
             createdAt: item.createdAt,
             name: item.name,
-            description: item.description,
+            description: item.description || "No Description Available",
             adminId: item.adminId,
             profilePhoto: item.profilePhoto?.url || "/default avatar.png",
             profilePhotoId: item.profilePhoto?.id,
@@ -157,7 +182,7 @@ export function useAppLogic() {
             keyID: crypto.randomUUID(),
             createdAt: item.createdAt,
             name: item.name,
-            description: item.description,
+            description: item.description || "No Description Available",
             adminId: item.adminId,
             profilePhoto: item.profilePhoto?.url || "/default avatar.png",
             profilePhotoId: item.profilePhoto?.id,
@@ -185,13 +210,19 @@ export function useAppLogic() {
       if (response.ok) {
         const result = await response.json();
         const neededItems = result.map((item) => {
+          let profilePhoto = item.photo?.url || "/default avatar.png";
+          if (item.type === "guest" && item.displayName === "Goku") {
+            profilePhoto = "/goku.jpeg";
+          } else if (item.type === "guest" && item.displayName === "Vegeta") {
+            profilePhoto = "/vegeta.jpg";
+          }
           return {
             id: item.id,
             keyID: crypto.randomUUID(),
             createdAt: item.createdAt,
             displayName: item.displayName,
             bio: item.bio || "No Bio Available",
-            photo: item.photo?.url || "/default avatar.png",
+            photo: profilePhoto,
             photoId: item.photo?.id,
           };
         });
