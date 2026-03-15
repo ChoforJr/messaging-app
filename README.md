@@ -1,6 +1,6 @@
 # Messaging App
 
-A real-time messaging application that enables users to connect, chat with individual contacts, and participate in group conversations.
+A messaging application that enables users to connect, chat with individual contacts, and participate in group conversations.
 
 ## 🎯 Features
 
