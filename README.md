@@ -2,6 +2,10 @@
 
 A messaging application that enables users to connect, chat with individual contacts, and participate in group conversations.
 
+## 🔗 Backend API
+
+This application requires the [Messaging App API](https://github.com/ChoforJr/messaging-app-api) to function. Refer to the API repository for setup and documentation.
+
 ## 🎯 Features
 
 - **User Authentication** - Secure sign-up and login
@@ -84,10 +88,6 @@ src/
 ├── main.jsx             # App entry point
 └── ErrorPage.jsx        # Error handling component
 ```
-
-## 🔗 Backend API
-
-This application requires the [Messaging App API](https://github.com/ChoforJr/messaging-app-api) to function. Refer to the API repository for setup and documentation.
 
 ## 🚢 Deployment
 
