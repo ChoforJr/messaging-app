@@ -1,11 +1,11 @@
 import styles from "./account.module.css";
-import { useState, useContext } from "react";
-import { ItemContext } from "../ItemContext";
-
-const apiUrl = import.meta.env.VITE_MESSAGING_APP_API_URL;
+import { useState } from "react";
+import type { ChangeEvent } from "react";
+import { useItemContext } from "../ItemContext";
+import { API_URL } from "../lib/config";
 
 const Account = () => {
-  const { auth, account, refreshAccount, logout } = useContext(ItemContext);
+  const { auth, account, refreshAccount, logout } = useItemContext();
 
   const GUEST_ACCOUNTS = ["vegeta@gmail.com", "goku@gmail.com"];
   const isGuest = account ? GUEST_ACCOUNTS.includes(account.username) : false;
@@ -19,16 +19,21 @@ const Account = () => {
     confirmNewPassword: "",
   });
 
-  const authToken = localStorage.getItem("authorization");
+  const authToken =
+    typeof window === "undefined" ? null : window.localStorage.getItem("authorization");
 
-  const handlePatch = async (endpoint, body, successMsg) => {
+  const handlePatch = async (
+    endpoint: string,
+    body: Record<string, string>,
+    successMsg: string,
+  ) => {
     if (isGuest) return alert("Guest accounts cannot be modified.");
     try {
-      const response = await fetch(`${apiUrl}/user/self/${endpoint}`, {
+      const response = await fetch(`${API_URL}/user/self/${endpoint}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          authorization: authToken,
+          authorization: authToken ?? "",
         },
         body: JSON.stringify(body),
       });
@@ -54,10 +59,10 @@ const Account = () => {
     if (isGuest) return;
     try {
       const response = await fetch(
-        `${apiUrl}/user/file/profile/photo/${account.photoId}`,
+        `${API_URL}/user/file/profile/photo/${account?.photoId}`,
         {
           method: "DELETE",
-          headers: { authorization: authToken },
+          headers: { authorization: authToken ?? "" },
         },
       );
 
@@ -75,22 +80,22 @@ const Account = () => {
     }
   }
 
-  const handlePhotoUpload = async (e) => {
+  const handlePhotoUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     if (isGuest) return alert("Guest accounts cannot change photos.");
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (!file) return;
 
     const formData = new FormData();
     formData.append("uploads", file);
 
-    if (account.photoId) {
+    if (account?.photoId) {
       await deletePhoto();
     }
 
     try {
-      const response = await fetch(`${apiUrl}/user/file/profile/photo`, {
+      const response = await fetch(`${API_URL}/user/file/profile/photo`, {
         method: "POST",
-        headers: { authorization: authToken },
+        headers: { authorization: authToken ?? "" },
         body: formData,
       });
 
@@ -118,9 +123,9 @@ const Account = () => {
 
     if (confirmDelete) {
       try {
-        const response = await fetch(`${apiUrl}/user/self`, {
+        const response = await fetch(`${API_URL}/user/self`, {
           method: "DELETE",
-          headers: { authorization: authToken },
+          headers: { authorization: authToken ?? "" },
         });
 
         if (response.ok) {

@@ -342,7 +342,7 @@
   font-weight: 700;
 }
 
-textarea {
+.chatBody textarea {
   width: 100%;
   height: 80px;
   padding: 0.75rem;
@@ -355,14 +355,14 @@ textarea {
   transition: all 0.2s ease;
 }
 
-textarea:focus {
+.chatBody textarea:focus {
   outline: none;
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-button {
+.chatBody button {
   padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
@@ -374,12 +374,12 @@ button {
   font-size: 0.95rem;
 }
 
-button:hover {
+.chatBody button:hover {
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
   transform: translateY(-2px);
 }
 
-button:active {
+.chatBody button:active {
   transform: translateY(0);
 }
 
@@ -628,4 +628,1265 @@ button:active {
 
 .changeGroupPhotoBtn input[type="file"] {
   display: none;
+}
+
+.chatBody {
+  min-height: min(72vh, 52rem);
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
+  color: #0f172a;
+  background: transparent;
+}
+
+.contacts,
+.groups {
+  flex: 0 0 19rem;
+  width: 19rem;
+  height: min(72vh, 52rem);
+  min-height: 30rem;
+  border: 1px solid #e6eaf1;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.04);
+}
+
+.contacts:hover,
+.groups:hover {
+  transform: none;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.contact {
+  margin: 0.45rem;
+  border: 1px solid transparent;
+  background: #fff;
+  color: #334155;
+}
+
+.contact:hover {
+  transform: none;
+  border-color: #e0e7ff;
+  background: #f8faff;
+}
+
+.contact img {
+  border: 0;
+}
+
+.contact button {
+  border-radius: 0.5rem;
+  background: #f1f5f9;
+  padding: 0.35rem 0.55rem;
+  color: #64748b;
+}
+
+.contact button:hover {
+  transform: none;
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.messages {
+  flex: 1 1 auto;
+  width: auto;
+  height: min(72vh, 52rem);
+  min-height: 30rem;
+  border: 1px solid #e6eaf1;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.04);
+}
+
+.messagesHeader,
+.messages > div:first-child {
+  background: #fff;
+  border-bottom: 1px solid #eef0f5;
+  color: #1e293b;
+}
+
+.messagesHeader:hover,
+.messages > div:first-child:hover {
+  background: #fafbff;
+}
+
+.messagesContainer {
+  background: #f8fafc;
+}
+
+.message.userMessage {
+  border: 0;
+  background: #4f46e5;
+  color: #fff;
+}
+
+.message.contactMessage {
+  border: 1px solid #e6eaf1;
+  background: #fff;
+  color: #334155;
+}
+
+.sendMessageSection {
+  border-top: 1px solid #eef0f5;
+  background: #fff;
+}
+
+.sendMessageSection textarea {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.sendMessageSection textarea:focus {
+  border-color: #818cf8;
+  background: #fff;
+}
+
+.sendMessageSection button,
+.createGroupDialog button:last-child {
+  border: 0;
+  border-radius: 0.7rem;
+  background: #4f46e5;
+  color: #fff;
+}
+
+.uploadBtn {
+  color: #4f46e5;
+}
+
+@media (max-width: 800px) {
+  .chatBody {
+    flex-direction: column;
+  }
+
+  .contacts,
+  .groups,
+  .messages {
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    min-height: 18rem;
+  }
+
+  .messages {
+    min-height: 32rem;
+  }
+}
+
+.chatBody {
+  height: min(70rem, calc(100dvh - 9.5rem));
+  min-height: 34rem;
+  gap: 1rem;
+}
+
+.contacts,
+.groups {
+  display: flex;
+  flex: 0 0 20rem;
+  flex-direction: column;
+  width: 20rem;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid #e6eaf1;
+  background: #fff;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.045);
+}
+
+.contacts:hover,
+.groups:hover {
+  transform: none;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.045);
+}
+
+.contactsHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.35rem 1.25rem 1rem;
+}
+
+.contactsHeading h2 {
+  margin: 0.35rem 0 0;
+  color: #172033;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.contactsHeading p {
+  margin: 0.25rem 0 0;
+  color: #94a3b8;
+  font-size: 0.76rem;
+}
+
+.eyebrow {
+  color: #818cf8;
+  font-size: 0.63rem;
+  font-weight: 750;
+  letter-spacing: 0.15em;
+}
+
+.contactCount {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border-radius: 0.7rem;
+  background: #f1f2ff;
+  color: #5b5bd6;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.groupsHeading {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 1.35rem 1rem 1rem 1.25rem;
+}
+
+.groupsHeading h2 {
+  margin: 0.35rem 0 0;
+  color: #172033;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.groupsHeading p {
+  margin: 0.25rem 0 0;
+  color: #94a3b8;
+  font-size: 0.76rem;
+}
+
+.groups .createGroupButton,
+.messages .emptyCreateGroupButton {
+  display: inline-flex;
+  width: auto;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 0;
+  border-radius: 0.7rem;
+  background: #5b4be0;
+  padding: 0.62rem 0.78rem;
+  color: white;
+  font-size: 0.74rem;
+  font-weight: 650;
+  box-shadow: 0 4px 10px rgba(91, 75, 224, 0.14);
+}
+
+.groups .createGroupButton:hover,
+.messages .emptyCreateGroupButton:hover {
+  transform: translateY(-1px);
+  background: #493bc7;
+  box-shadow: 0 6px 14px rgba(91, 75, 224, 0.2);
+}
+
+.groupListEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.75rem;
+  border: 1px dashed #e1e5ef;
+  border-radius: 1rem;
+  padding: 1.25rem 0.8rem;
+  color: #9aa4b4;
+  text-align: center;
+}
+
+.groupListEmpty p {
+  margin: 0;
+  color: #344054;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.groupListEmpty span {
+  color: #98a2b3;
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.contactSearch {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 1rem 0.75rem;
+  border: 1px solid #e9ecf3;
+  border-radius: 0.75rem;
+  background: #f8f9fc;
+  padding: 0 0.75rem;
+  color: #94a3b8;
+}
+
+.contactSearch:focus-within {
+  border-color: #a5b4fc;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.contactSearch input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 0.7rem 0;
+  color: #1e293b;
+  font-size: 0.79rem;
+}
+
+.contactSearch input::placeholder {
+  color: #a0a9b8;
+}
+
+.contactSearch kbd {
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  place-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.35rem;
+  background: white;
+  color: #94a3b8;
+  font-size: 0.68rem;
+}
+
+.contactList {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.15rem 0 0.75rem;
+}
+
+.contactList::-webkit-scrollbar,
+.messagesContainer::-webkit-scrollbar {
+  width: 5px;
+}
+
+.contactList::-webkit-scrollbar-thumb,
+.messagesContainer::-webkit-scrollbar-thumb {
+  border-radius: 99px;
+  background: #e2e8f0;
+}
+
+.contact {
+  position: relative;
+  min-width: 0;
+  margin: 0.25rem 0.65rem;
+  gap: 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+  background: transparent;
+  color: #334155;
+  padding: 0.75rem;
+}
+
+.contact:hover {
+  transform: none;
+  border-color: #eef0f7;
+  background: #f8f9fc;
+}
+
+.contact p {
+  color: #172033;
+  font-size: 0.9rem;
+}
+
+.contactAvatar,
+.headerAvatar {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.contactAvatar img {
+  display: block;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 0.9rem;
+  object-fit: cover;
+}
+
+.contactInfo {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.contactName {
+  overflow: hidden;
+  color: #202a3d;
+  font-size: 0.82rem;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contactPreview {
+  overflow: hidden;
+  color: #8993a5;
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contactMeta {
+  display: flex;
+  min-width: 1rem;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: stretch;
+  justify-content: space-between;
+}
+
+.contactMeta time {
+  padding-top: 0.1rem;
+  color: #a0a9b8;
+  font-size: 0.63rem;
+  white-space: nowrap;
+}
+
+.contact .unfollowButton {
+  display: grid;
+  width: 1.7rem;
+  height: 1.7rem;
+  place-items: center;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  padding: 0;
+  color: #98a2b3;
+  opacity: 0;
+  transition: background 150ms ease, color 150ms ease, opacity 150ms ease;
+}
+
+.contact:hover .unfollowButton,
+.contact:focus-within .unfollowButton {
+  opacity: 1;
+}
+
+.contact .unfollowButton:hover {
+  transform: none;
+  background: #fff0f0;
+  color: #dc5151;
+  box-shadow: none;
+}
+
+.selectedContact,
+.selectedContact:hover {
+  border-color: #e5e7ff;
+  background: #f1f2ff;
+}
+
+.selectedContact .contactName {
+  color: #4338ca;
+}
+
+.selectedContact .contactPreview {
+  color: #7273be;
+}
+
+.contactEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 1.25rem;
+  border: 1px dashed #e1e5ef;
+  border-radius: 1rem;
+  padding: 1.5rem 1rem;
+  color: #9aa4b4;
+  text-align: center;
+}
+
+.contactEmpty p {
+  margin: 0;
+  color: #344054;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.contactEmpty span,
+.noSearchResults {
+  color: #98a2b3;
+  font-size: 0.72rem;
+}
+
+.noSearchResults {
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.messages {
+  position: relative;
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  border-radius: 1.25rem;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.045);
+}
+
+.messagesHeader {
+  min-height: 4.6rem;
+  padding: 0 1.4rem;
+  border-bottom: 1px solid #eff1f5;
+  background: #fff;
+  color: #1e293b;
+  cursor: default;
+}
+
+.messages > .messagesHeader {
+  min-height: 4.6rem;
+  padding: 0 1.4rem;
+  border-bottom: 1px solid #eff1f5;
+  background: #fff;
+}
+
+.messagesHeader:hover,
+.messages > .messagesHeader:hover {
+  background: #fff;
+}
+
+.messagesHeader img,
+.messages > .messagesHeader img {
+  width: 2.65rem;
+  height: 2.65rem;
+  border-radius: 0.85rem;
+}
+
+.backToContacts {
+  display: none;
+}
+
+.headerIdentity {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.headerIdentity strong {
+  color: #172033;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.headerIdentity > span {
+  color: #8a94a5;
+  font-size: 0.72rem;
+}
+
+.headerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid #e9eafe;
+  border-radius: 99px;
+  background: #f8f8ff;
+  padding: 0.42rem 0.7rem;
+  color: #6865bd;
+  font-size: 0.67rem;
+  font-weight: 600;
+}
+
+.headerBadge > span {
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: #7c76e8;
+}
+
+.messagesContainer {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(248, 249, 255, 0.9), transparent 60%),
+    #fbfcfe;
+  padding: 1.5rem clamp(1rem, 3vw, 2.4rem);
+}
+
+.message.userMessage {
+  border: 1px solid #5748dc;
+  border-radius: 1rem 1rem 0.3rem 1rem;
+  background: #5b4be0;
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(91, 75, 224, 0.12);
+}
+
+.message.contactMessage {
+  border: 1px solid #edf0f5;
+  border-radius: 1rem 1rem 1rem 0.3rem;
+  background: #fff;
+  color: #334155;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.035);
+}
+
+.message p {
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.message span {
+  color: #a0a9b8;
+  font-size: 0.64rem;
+}
+
+.userMessage span {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.sendMessageSection {
+  gap: 0.55rem;
+  border-top: 1px solid #eef0f5;
+  background: #fff;
+  padding: 1rem 1.25rem 0.8rem;
+}
+
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  border: 1px solid #e6e9f0;
+  border-radius: 1rem;
+  background: #f8f9fc;
+  padding: 0.45rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.composer:focus-within {
+  border-color: #b4b6ed;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08);
+}
+
+.sendMessageSection .composer textarea {
+  height: auto;
+  min-height: 2.7rem;
+  max-height: 9rem;
+  flex: 1;
+  border: 0;
+  background: transparent;
+  padding: 0.7rem 0.5rem;
+  color: #253047;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  resize: none;
+}
+
+.sendMessageSection .composer textarea::placeholder {
+  color: #a1aaba;
+}
+
+.sendMessageSection .composer textarea:focus {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.sendMessageSection .attachButton,
+.sendMessageSection .sendButton {
+  display: grid;
+  flex: 0 0 auto;
+  width: 2.55rem;
+  height: 2.55rem;
+  place-items: center;
+  border: 0;
+  border-radius: 0.75rem;
+  padding: 0;
+}
+
+.sendMessageSection .attachButton {
+  background: transparent;
+  color: #8792a5;
+}
+
+.sendMessageSection .attachButton:hover {
+  transform: none;
+  background: #eef0fa;
+  color: #625bd4;
+  box-shadow: none;
+}
+
+.sendMessageSection .sendButton {
+  background: #5b4be0;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(91, 75, 224, 0.18);
+}
+
+.sendMessageSection .sendButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #493bc7;
+  box-shadow: 0 5px 13px rgba(91, 75, 224, 0.24);
+}
+
+.sendMessageSection .sendButton:disabled {
+  cursor: not-allowed;
+  background: #e7e9f2;
+  color: #a4acbb;
+  box-shadow: none;
+}
+
+.composerHint {
+  align-self: flex-end;
+  color: #a0a9b8 !important;
+  font-size: 0.65rem !important;
+}
+
+.imageComposer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.imageComposer p {
+  flex: 1;
+  color: #929cad;
+  font-size: 0.72rem;
+}
+
+.sendMessageSection .cancelAttach {
+  width: auto;
+  border: 0;
+  background: transparent;
+  padding: 0.55rem 0.7rem;
+  color: #727d90;
+  font-size: 0.75rem;
+}
+
+.sendMessageSection .cancelAttach:hover {
+  transform: none;
+  background: #f4f5f9;
+  box-shadow: none;
+}
+
+.sendMessageSection .uploadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.7rem;
+  background: #5b4be0;
+  padding: 0.65rem 0.9rem;
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.emptyConversation {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.messages > .emptyConversation {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  padding: 2rem;
+  cursor: default;
+}
+
+.emptyCreateGroupButton {
+  margin-top: 1.1rem;
+}
+
+.messages > .emptyConversation {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  padding: 2rem;
+  cursor: default;
+}
+
+.emptyConversation > span {
+  display: grid;
+  width: 4.25rem;
+  height: 4.25rem;
+  place-items: center;
+  border: 1px solid #e9eafe;
+  border-radius: 1.4rem;
+  background: #f3f2ff;
+  color: #625bd4;
+}
+
+.emptyConversation h2 {
+  max-width: 20rem;
+  margin: 1.2rem 0 0.45rem;
+  color: #273248;
+  font-size: 1.1rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.emptyConversation p {
+  max-width: 22rem;
+  margin: 0;
+  color: #8a94a5;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.createGroupDialog[open] {
+  display: flex;
+  width: min(100% - 2rem, 27rem);
+  flex-direction: column;
+  gap: 1rem;
+  margin: auto;
+  border: 1px solid #e7eaf2;
+  border-radius: 1.25rem;
+  background: #fff;
+  padding: 1.4rem;
+  color: #1e293b;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.2);
+}
+
+.createGroupDialog[open]::backdrop {
+  background: rgba(20, 28, 48, 0.42);
+  backdrop-filter: blur(4px);
+}
+
+.createDialogHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.35rem;
+}
+
+.createDialogHeader > div {
+  flex: 1;
+}
+
+.createDialogHeader h2 {
+  margin: 0;
+  color: #192338;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.createDialogHeader p {
+  margin: 0.25rem 0 0;
+  color: #8993a5;
+  font-size: 0.76rem;
+}
+
+.createDialogIcon {
+  display: grid;
+  width: 2.7rem;
+  height: 2.7rem;
+  place-items: center;
+  border-radius: 0.85rem;
+  background: #f1f0ff;
+  color: #5b4be0;
+}
+
+.createGroupDialog .closeDialogButton {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 0;
+  border-radius: 0.6rem;
+  background: transparent;
+  padding: 0;
+  color: #8993a5;
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+
+.createGroupDialog .closeDialogButton:hover {
+  transform: none;
+  background: #f3f4f8;
+  box-shadow: none;
+}
+
+.createGroupDialog > label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  color: #475467;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.createGroupDialog > label input {
+  width: 100%;
+  border: 1px solid #e1e5ed;
+  border-radius: 0.7rem;
+  outline: 0;
+  background: #fafbfc;
+  padding: 0.75rem 0.8rem;
+  color: #1e293b;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.createGroupDialog > label input:focus {
+  border-color: #a5b4fc;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.createGroupDialog .submitCreateGroup {
+  width: 100%;
+  margin-top: 0.25rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: #5b4be0;
+  padding: 0.8rem;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.createGroupDialog .submitCreateGroup:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #493bc7;
+  box-shadow: 0 5px 12px rgba(91, 75, 224, 0.2);
+}
+
+.createGroupDialog .submitCreateGroup:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+@media (max-width: 800px) {
+  .chatBody {
+    height: auto;
+    min-height: 0;
+    flex-direction: column;
+  }
+
+  .contacts,
+  .groups,
+  .messages {
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+
+  .contacts,
+  .groups {
+    max-height: 17rem;
+  }
+
+  .groupsHeading {
+    padding: 0.9rem 1rem 0.7rem;
+  }
+
+  .contactList {
+    max-height: 10rem;
+  }
+
+  .messages {
+    min-height: 34rem;
+  }
+
+  .backToContacts {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 0;
+    border-radius: 0.6rem;
+    background: transparent;
+    padding: 0;
+    color: #758095;
+  }
+
+  .headerBadge {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatBody {
+    gap: 0.75rem;
+  }
+
+  .contactsHeading {
+    padding: 1rem 1rem 0.75rem;
+  }
+
+  .contactSearch {
+    margin: 0 0.75rem 0.6rem;
+  }
+
+  .groupsHeading {
+    padding: 0.8rem;
+  }
+
+  .contact {
+    margin-right: 0.45rem;
+    margin-left: 0.45rem;
+    padding: 0.62rem;
+  }
+
+  .contact .unfollowButton {
+    opacity: 1;
+  }
+
+  .messagesHeader {
+    min-height: 4.2rem;
+    gap: 0.65rem;
+    padding: 0 0.8rem;
+  }
+
+  .messages > .messagesHeader {
+    min-height: 4.2rem;
+    gap: 0.65rem;
+    padding: 0 0.8rem;
+  }
+
+  .messagesContainer {
+    padding: 1rem 0.8rem;
+  }
+
+  .sendMessageSection {
+    padding: 0.75rem;
+  }
+
+  .composerHint {
+    display: none;
+  }
+}
+
+.groupList {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow-y: auto;
+  padding: 0.35rem 0.65rem 0.8rem;
+}
+
+.groupRow {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+  padding: 0.45rem;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.groupRow:hover,
+.selectedGroup {
+  border-color: #e9e8fc;
+  background: #f7f7ff;
+}
+
+.groupSelect {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 0.7rem;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.groupSelect > img {
+  width: 2.65rem;
+  height: 2.65rem;
+  flex: 0 0 auto;
+  border-radius: 0.85rem;
+  object-fit: cover;
+}
+
+.groupSelect > span {
+  display: grid;
+  min-width: 0;
+  gap: 0.25rem;
+}
+
+.groupSelect strong,
+.groupSelect small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.groupSelect strong {
+  color: #283348;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.groupSelect small {
+  max-width: 11rem;
+  color: #8993a5;
+  font-size: 0.68rem;
+}
+
+.groupActions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.2rem;
+}
+
+.groupActions .editGroupBtn,
+.leaveGroupButton {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  margin: 0;
+  border: 0;
+  border-radius: 0.65rem;
+  background: transparent;
+  color: #8a94a5;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.groupActions .editGroupBtn:hover {
+  transform: none;
+  background: #eeedff;
+  color: #5b4be0;
+  box-shadow: none;
+}
+
+.leaveGroupButton:hover {
+  background: #fff0f0;
+  color: #d04444;
+}
+
+.groupListEmpty {
+  flex: 1;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.editGroupDialog[open] {
+  display: flex;
+  width: min(100% - 2rem, 27rem);
+  flex-direction: column;
+  gap: 1rem;
+  margin: auto;
+  border: 1px solid #e7eaf2;
+  border-radius: 1.25rem;
+  background: #fff;
+  padding: 1.4rem;
+  color: #1e293b;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.2);
+}
+
+.editGroupDialog[open]::backdrop {
+  background: rgba(20, 28, 48, 0.42);
+  backdrop-filter: blur(4px);
+}
+
+.editGroupDialog > button:first-child {
+  align-self: flex-end;
+  margin: -0.35rem -0.35rem 0;
+  border: 0;
+  border-radius: 0.6rem;
+  background: transparent;
+  padding: 0.4rem 0.65rem;
+  color: #667085;
+  cursor: pointer;
+}
+
+.editGroupDialog > label:not(.changeGroupPhotoBtn) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  color: #475467;
+  font-size: 0.76rem;
+}
+
+.editGroupDialog > label input {
+  width: 100%;
+  border: 1px solid #e1e5ed;
+  border-radius: 0.7rem;
+  outline: 0;
+  background: #fafbfc;
+  padding: 0.75rem 0.8rem;
+  color: #1e293b;
+  font: inherit;
+}
+
+.editGroupDialog > label button,
+.editGroupDialog .changeGroupPhotoBtn,
+.editGroupDialog .deleteGroupBtn {
+  min-height: 2.5rem;
+  border: 0;
+  border-radius: 0.7rem;
+  padding: 0.65rem 0.8rem;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.editGroupDialog > label button {
+  background: #f1f0ff;
+  color: #5145cd;
+}
+
+.editGroupDialog .changeGroupPhotoBtn {
+  justify-content: center;
+  background: #f4f5f8;
+  color: #475467;
+}
+
+.editGroupDialog .deleteGroupBtn {
+  margin: 0;
+  background: #fff0f0;
+  color: #c53f47;
+}
+
+.loadOlderButton {
+  align-self: center;
+  flex: 0 0 auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #fff;
+  padding: 0.5rem 0.85rem;
+  color: #697386;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.loadOlderButton:hover:not(:disabled) {
+  border-color: #c9c5f7;
+  background: #f8f7ff;
+  color: #5145cd;
+}
+
+.loadOlderButton:disabled {
+  cursor: wait;
+  opacity: 0.65;
 }

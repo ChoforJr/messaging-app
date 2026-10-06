@@ -86,7 +86,73 @@
   color: white;
 }
 
-button {
+.accountContainer {
+  color: #1e293b;
+}
+
+.profileHeader,
+.card {
+  border: 1px solid #e6eaf1;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.04);
+}
+
+.profileHeader h1,
+.card h2 {
+  color: #0f172a;
+}
+
+.profileImg {
+  border-color: #c7d2fe;
+}
+
+.inputGroup input,
+.inputGroup textarea,
+.passwordFields input {
+  border: 1px solid #dbe1ec;
+  background: #fbfcfe;
+  color: #0f172a;
+}
+
+.inputGroup input:focus,
+.inputGroup textarea:focus,
+.passwordFields input:focus {
+  border-color: #818cf8;
+  outline: 3px solid rgba(99, 102, 241, 0.14);
+}
+
+.accountContainer button {
+  border-radius: 0.65rem;
+  background: #4f46e5;
+}
+
+.accountContainer button:hover {
+  background: #4338ca;
+}
+
+.accountContainer .deleteBtn {
+  background: #dc2626;
+}
+
+.accountContainer .deleteBtn:hover {
+  background: #b91c1c;
+}
+
+@media (max-width: 650px) {
+  .settingsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullWidth {
+    grid-column: auto;
+  }
+
+  .inputGroup {
+    flex-direction: column;
+  }
+}
+
+.accountContainer button {
   background: #ee204d;
   color: white;
   border: none;
@@ -96,7 +162,7 @@ button {
   font-weight: bold;
 }
 
-button:hover {
+.accountContainer button:hover {
   background: #ff4d6d;
 }
 
@@ -165,9 +231,9 @@ button:hover {
 }
 
 /* Gray out inputs and buttons when disabled */
-input:disabled,
-textarea:disabled,
-button:disabled {
+.accountContainer input:disabled,
+.accountContainer textarea:disabled,
+.accountContainer button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   filter: grayscale(1);
@@ -175,4 +241,44 @@ button:disabled {
 
 .disabledArea {
   position: relative;
+}
+
+.profileHeader,
+.card {
+  border: 1px solid #e6eaf1;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.04);
+}
+
+.profileHeader h1,
+.card h2 {
+  color: #0f172a;
+}
+
+.profileImg {
+  border-color: #c7d2fe;
+}
+
+.inputGroup input,
+.inputGroup textarea,
+.passwordFields input {
+  border: 1px solid #dbe1ec;
+  background: #fbfcfe;
+  color: #0f172a;
+}
+
+.inputGroup input:focus,
+.inputGroup textarea:focus,
+.passwordFields input:focus {
+  border-color: #818cf8;
+  outline: 3px solid rgba(99, 102, 241, 0.14);
+}
+
+.accountContainer button {
+  border-radius: 0.65rem;
+  background: #4f46e5;
+}
+
+.accountContainer button:hover {
+  background: #4338ca;
 }

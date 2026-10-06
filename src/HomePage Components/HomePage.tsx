@@ -1,8 +1,10 @@
 import styles from "./homePage.module.css";
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { ItemContext } from "../ItemContext";
-const apiUrl = import.meta.env.VITE_MESSAGING_APP_API_URL;
+import { useState } from "react";
+import type { ChangeEvent, SyntheticEvent } from "react";
+import { useRouter } from "next/navigation";
+import { useItemContext } from "../ItemContext";
+import type { ApiErrorResponse, ApiLoginResponse } from "../types";
+import { API_URL } from "../lib/config";
 
 const HomePage = () => {
   const [login, setLogin] = useState({
@@ -24,10 +26,11 @@ const HomePage = () => {
     refreshExplorePeople,
     refreshMemberGroups,
     refreshExploreGroups,
-    refreshAllProfiles,
-  } = useContext(ItemContext);
+    refreshContactMessages,
+    refreshGroupMessages,
+  } = useItemContext();
 
-  function onChangeHandlerLogin(event) {
+  function onChangeHandlerLogin(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setLogin((prevLogin) => ({
       ...prevLogin,
@@ -35,7 +38,7 @@ const HomePage = () => {
     }));
   }
 
-  function onChangeHandlerSignup(event) {
+  function onChangeHandlerSignup(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setSignUp((prevLogin) => ({
       ...prevLogin,
@@ -43,9 +46,13 @@ const HomePage = () => {
     }));
   }
 
-  const navigate = useNavigate();
+  const router = useRouter();
 
-  const handleLoginSubmit = async (e, username, password) => {
+  const handleLoginSubmit = async (
+    e: SyntheticEvent,
+    username: string,
+    password: string,
+  ) => {
     e.preventDefault();
 
     if (!username || !password) {
@@ -54,7 +61,7 @@ const HomePage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}/login`, {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +72,7 @@ const HomePage = () => {
         }),
       });
 
-      const data = await response.json();
+      const data = (await response.json()) as ApiLoginResponse;
 
       if (response.ok) {
         localStorage.setItem("authorization", `Bearer ${data.token}`);
@@ -75,10 +82,13 @@ const HomePage = () => {
         refreshExplorePeople();
         refreshMemberGroups();
         refreshExploreGroups();
-        refreshAllProfiles();
-        navigate("/account", { replace: false });
+        refreshContactMessages();
+        refreshGroupMessages();
+        router.push("/account");
       } else if (response.status === 400) {
-        const errorMessages = data.errors.map((err) => err.msg).join("\n");
+        const errorMessages = (data.errors ?? [])
+          .map((err) => err.msg)
+          .join("\n");
         alert(`Format Error:\n${errorMessages}`);
       } else if (response.status === 401) {
         alert(data.error || "Login failed: Invalid credentials");
@@ -93,7 +103,7 @@ const HomePage = () => {
     }
   };
 
-  const handleSignUpSubmit = async (e) => {
+  const handleSignUpSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
     if (
@@ -111,7 +121,7 @@ const HomePage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}/signup`, {
+      const response = await fetch(`${API_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,7 +137,7 @@ const HomePage = () => {
         return;
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as ApiErrorResponse;
 
       if (response.status === 400 || response.status === 422) {
         if (data.errors) {
@@ -245,18 +255,20 @@ const HomePage = () => {
       <h1>OR</h1>
       <section className={styles.guest}>
         <h1>LOGIN AS</h1>
-        <article
+        <button
+          type="button"
           onClick={(e) => handleLoginSubmit(e, "goku@gmail.com", "1234")}
         >
           <img src="/goku.jpeg" alt="Goku profile photo" />
           <h2>Goku</h2>
-        </article>
-        <article
+        </button>
+        <button
+          type="button"
           onClick={(e) => handleLoginSubmit(e, "vegeta@gmail.com", "1234")}
         >
           <img src="/vegeta.jpg" alt="Vegeta profile photo" />
           <h2>Vegeta</h2>
-        </article>
+        </button>
       </section>
     </div>
   );
