@@ -98,4 +98,4 @@ The Express API remains the source of truth for message persistence. After a suc
 
 ## Deployment
 
-Deploy the frontend to Vercel or another Node.js host with `NEXT_PUBLIC_MESSAGING_APP_API_URL` set to the public API URL. The API must be reachable over HTTP and WebSocket connections, and its CORS allowlist must include the deployed frontend origin.
+Deploy the frontend to Vercel with the Vercel project root directory set to `messaging-app`. `vercel.json` identifies this as a Next.js project and selects Next's `.next` build output (not `dist`). Set `NEXT_PUBLIC_MESSAGING_APP_API_URL` to the public API URL. The API must be reachable over HTTP and WebSocket connections, and its CORS allowlist must include the deployed frontend origin.
