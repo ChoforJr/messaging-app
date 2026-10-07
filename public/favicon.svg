@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Gather favicon">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b6b88"/>
+      <stop offset="100%" stop-color="#19a7c5"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#bg)"/>
+  <path d="M18 17.5h28a8 8 0 0 1 8 8v12a8 8 0 0 1-8 8H27l-9.5 8.5v-8.5H18a8 8 0 0 1-8-8v-12a8 8 0 0 1 8-8Z" fill="#fff"/>
+  <circle cx="25" cy="30" r="2.7" fill="#0b6b88"/>
+  <circle cx="32" cy="30" r="2.7" fill="#0b6b88"/>
+  <circle cx="39" cy="30" r="2.7" fill="#0b6b88"/>
+</svg>
